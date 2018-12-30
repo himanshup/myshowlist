@@ -24,10 +24,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, "www", "static")
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = 'ygtfc7xfp(is5b&z48@wdse*l&qe*va^y^7mum7^cl2fm3o1@&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['myshowlist-dev.us-west-2.elasticbeanstalk.com']
 
