@@ -1,0 +1,6 @@
+.env
+venv
+
+api/__pycache__/
+api/migrations/__pycache__
+myshowlist/__pycache__
