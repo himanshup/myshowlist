@@ -32,7 +32,11 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['myshowlist-dev.us-west-2.elasticbeanstalk.com']
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000/',
+)
 
 # Application definition
 
