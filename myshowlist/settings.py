@@ -29,10 +29,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "www", "static")
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if sys.argv[1] == 'runserver':
-    DEBUG = True
-else:
-    DEBUG = False
+# if sys.argv[1] == 'runserver':
+#     DEBUG = True
+# else:
+#     DEBUG = False
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'myshowlist-dev.us-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost']
