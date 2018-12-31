@@ -13,6 +13,7 @@ from .serializers import EntrySerializer, TokenSerializer, UserSerializer
 from .permissions import IsOwnerOrReadOnly
 
 import json
+import requests
 
 # JWT Settings
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -53,6 +54,53 @@ class UserDetail(generics.RetrieveAPIView):
           },
           status=status.HTTP_404_NOT_FOUND
       )
+
+
+class ShowsView(generics.ListAPIView):
+  permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+  def get(self, request):
+    if self.request.query_params.get('q', None):
+      q = self.request.query_params.get('q', None)
+      url = 'https://api.jikan.moe/v3/search/anime/?q=' + q + '&page=1'
+      shows = requests.get(url).json()
+
+      return Response(shows)
+    else:
+      shows = {}
+
+      airingUrl = 'https://api.jikan.moe/v3/top/anime/1/airing'
+      shows['airing'] = requests.get(airingUrl).json()['top']
+
+      upcomingUrl = 'https://api.jikan.moe/v3/top/anime/1/upcoming'
+      shows['upcoming'] = requests.get(upcomingUrl).json()['top']
+
+      popularUrl = 'https://api.jikan.moe/v3/top/anime/1/bypopularity'
+      shows['popular'] = requests.get(popularUrl).json()['top']
+
+      favoriteUrl = 'https://api.jikan.moe/v3/top/anime/1/favorite'
+      shows['favorite'] = requests.get(favoriteUrl).json()['top']
+
+      return Response(shows)
+
+
+class ShowDetail(generics.RetrieveAPIView):
+  serializer_class = EntrySerializer
+  permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+  def get(self, request, pk=None):
+    data = {}
+
+    url = 'https://api.jikan.moe/v3/anime/' + str(pk)
+    data['show'] = requests.get(url).json()
+
+    try:
+      entry = Entry.objects.filter(author_id=request.user.id).get(malID=pk)
+      data['entry'] = EntrySerializer(entry).data
+    except Entry.DoesNotExist:
+      data['entry'] = None
+
+    return Response(data)
 
 
 class ListView(generics.ListCreateAPIView):
