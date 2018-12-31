@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import datetime
+import sys
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -25,12 +26,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, "www", "static")
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ygtfc7xfp(is5b&z48@wdse*l&qe*va^y^7mum7^cl2fm3o1@&'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = (sys.argv[1] == 'runserver')
 
-ALLOWED_HOSTS = ['myshowlist-dev.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = [
+    'myshowlist-dev.us-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
