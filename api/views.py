@@ -60,21 +60,9 @@ class ListView(generics.ListCreateAPIView):
   serializer_class = EntrySerializer
   permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
-  def get(self, request, pk=None, status='all', sort='title', direction='desc'):
+  def get(self, request, pk=None):
     try:
-      if status == 'all' and direction == 'desc':
-        entries = self.queryset.filter(
-            author_id=pk).order_by(sort.lower())
-      elif status == 'all' and direction == 'asc':
-        entries = self.queryset.filter(
-            author_id=pk).order_by('-' + sort.lower())
-      elif direction == 'desc':
-        entries = self.queryset.filter(author_id=pk).filter(
-            status=status.lower()).order_by(sort.lower())
-      elif direction == 'asc':
-        entries = self.queryset.filter(author_id=pk).filter(
-            status=status.lower()).order_by('-' + sort.lower())
-
+      entries = self.queryset.filter(author_id=pk)
       return Response(EntrySerializer(entries, many=True).data)
     except User.DoesNotExist:
       return Response(
@@ -109,7 +97,7 @@ class EntryDetail(generics.RetrieveUpdateDestroyAPIView):
   serializer_class = EntrySerializer
   permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly, )
 
-  def get(self, request, pk=None):
+  def get(self, request, pk=None, userId=None):
     try:
       entry = self.get_object()
       return Response(EntrySerializer(entry).data)
@@ -121,7 +109,7 @@ class EntryDetail(generics.RetrieveUpdateDestroyAPIView):
           status=status.HTTP_404_NOT_FOUND
       )
 
-  def put(self, request, pk=None):
+  def put(self, request, pk=None, userId=None):
     try:
       entry = self.get_object()
       # Send data to update function which is in the serializers file
@@ -135,7 +123,7 @@ class EntryDetail(generics.RetrieveUpdateDestroyAPIView):
           status=status.HTTP_404_NOT_FOUND
       )
 
-  def delete(self, request, pk=None):
+  def delete(self, request, pk=None, userId=None):
     try:
       entry = self.get_object()
       entry.delete()
