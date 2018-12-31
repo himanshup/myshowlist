@@ -5,6 +5,7 @@ venv
 api/__pycache__/
 api/migrations/__pycache__
 myshowlist/__pycache__
+api/management/__pycache__
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
