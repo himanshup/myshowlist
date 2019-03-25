@@ -1,6 +1,6 @@
 # myshowlist Server
 
-This readme is a work in progress.
+This is the Django API for myshowlist - a web app for tracking shows. This readme is a work in progress.
 
 ## Running locally
 
@@ -10,7 +10,9 @@ cd myshowlist
 pip3 install -r requirements.txt
 ```
 
-Install postgres and create and configure a database. In myshowlist/settings.py, change the NAME/USER/PASSWORD values to yours.  
+Install [PostgreSQL](https://www.postgresql.org/) and create and configure a database.   
+
+In `/myshowlist/settings.py`, change NAME, USER, and PASSWORD values to yours:
 
 ```
 DATABASES = {
@@ -24,6 +26,12 @@ DATABASES = {
       }
   }
 ```
+
+You also might need to generate your own secret key and put it in a .env file:
+
+```
+SECRET_KEY='<key>'
+```  
 
 Create new migrations, apply the migrations to the database, and then run the server.
 
