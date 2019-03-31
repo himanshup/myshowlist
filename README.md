@@ -33,7 +33,7 @@ You also might need to generate your own secret key and put it in a .env file:
 SECRET_KEY='<key>'
 ```  
 
-Create new migrations, apply the migrations to the database, and then run the server.
+Start PostgreSQL, create/apply migrations to the database, and then run the server.
 
 ```
 python3 manage.py makemigrations
