@@ -33,7 +33,7 @@ You also might need to generate your own secret key and put it in a .env file:
 SECRET_KEY='<key>'
 ```  
 
-Start PostgreSQL, create/apply migrations to the database, and then run the server.
+Start [PostgreSQL](https://tableplus.io/blog/2018/10/how-to-start-stop-restart-postgresql-server.html), create/apply migrations to the database, and then run the server.
 
 ```
 python3 manage.py makemigrations
